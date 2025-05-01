@@ -15,7 +15,10 @@ const router = createBrowserRouter([
       {
         path: "/category/:id",
         element: <CategoryNews />,
-        loader:() => fetch('/public/news.json')
+        loader: () => fetch("/public/news.json"),
+        hydrateFallbackElement: (
+          <span className="w-10 mx-auto  loading loading-infinity "></span>
+        ),
       },
     ],
   },
