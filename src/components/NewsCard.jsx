@@ -1,9 +1,10 @@
 import { FaEye, FaStar } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
 import { BsBookmark } from "react-icons/bs";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
-  const { title, image_url, author, rating, total_view, details } = news;
+  const { id, title, image_url, author, rating, total_view, details } = news;
 
   return (
     <div className="card bg-base-100 border border-[#f3f3f3] rounded-md">
@@ -35,7 +36,9 @@ const NewsCard = ({ news }) => {
       {/* Main Content with Gap */}
       <div className="p-4 space-y-4">
         {/* Title */}
-        <h2 className="font-bold text-lg leading-snug hover:underline">{title}</h2>
+        <h2 className="font-bold text-lg leading-snug hover:underline">
+          {title}
+        </h2>
 
         {/* Image */}
         <img
@@ -49,10 +52,13 @@ const NewsCard = ({ news }) => {
           {details.length > 250 ? (
             <>
               {details.slice(0, 250)}...
-              <span className="text-orange-500 hover:underline font-semibold cursor-pointer">
+              <Link
+                to={`/news-details/${id}`}
+                className="text-orange-500 hover:underline font-semibold cursor-pointer"
+              >
                 {" "}
                 Read More
-              </span>
+              </Link>
             </>
           ) : (
             details

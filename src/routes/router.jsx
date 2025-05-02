@@ -5,6 +5,7 @@ import CategoryNews from "../components/mainlayote/pages/CategoryNews";
 import Login from "../components/mainlayote/pages/Login";
 import Register from "../components/mainlayote/pages/Register";
 import AuthLayout from "../layouts/AuthLayout";
+import NewsDetails from "../components/mainlayote/pages/NewsDetails";
 
 const router = createBrowserRouter([
   {
@@ -40,8 +41,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/news",
-    element: <h1>News Layout</h1>,
+    path: "/news-details/:id",
+    element: <NewsDetails/>,
+    loader: () => fetch("/news.json"),
+    hydrateFallbackElement: (
+      <span className="w-10 mx-auto  loading loading-infinity "></span>
+    ),
   },
   {
     path: "/*",
