@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router";
 import HomeLayout from "../layouts/HomeLayout";
 import Home from "../components/mainlayote/pages/Home";
 import CategoryNews from "../components/mainlayote/pages/CategoryNews";
+import Login from "../components/mainlayote/pages/Login";
+import Register from "../components/mainlayote/pages/Register";
+import AuthLayout from "../layouts/AuthLayout";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +18,7 @@ const router = createBrowserRouter([
       {
         path: "/category/:id",
         element: <CategoryNews />,
-        loader: () => fetch("/public/news.json"),
+        loader: () => fetch("/news.json"),
         hydrateFallbackElement: (
           <span className="w-10 mx-auto  loading loading-infinity "></span>
         ),
@@ -24,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <h1>Auth Layout</h1>,
+    element: <AuthLayout />,
     children: [
       {
         path: "/auth/login",
