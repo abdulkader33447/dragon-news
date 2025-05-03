@@ -1,30 +1,43 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../../provider/AuthProvider";
 
 const Register = () => {
-  const { createUser,setUser } = use(AuthContext);
+  const [nameError, setNameError] = useState("");
+
+  const { createUser, setUser } = use(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    // console.log(e.target);
 
     const form = e.target;
     const name = form.name.value;
+
+    if (name.length < 5) {
+      setNameError("Name should be more then five character");
+      return;
+    } else {
+      setNameError("");
+    }
+
     const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
     console.log({ name, photo, email, password });
 
     createUser(email, password)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
-      setUser(user);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        setUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode, errorMessage);
+        
+      });
   };
   return (
     <div className="flex justify-center items-center h-screen">
@@ -43,6 +56,7 @@ const Register = () => {
               placeholder="Your Name"
               required
             />
+            {nameError && <p className="text-xs text-red-300">{nameError}</p>}
             {/* photo */}
             <label className="label text-sm font-semibold">Photo URL</label>
             <input
@@ -82,6 +96,7 @@ const Register = () => {
                 Login
               </Link>
             </p>
+            {/* {error && <p className="text-xs text-red-400">{error}</p>} */}
           </fieldset>
         </form>
       </div>

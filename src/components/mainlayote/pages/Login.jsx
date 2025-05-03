@@ -1,10 +1,16 @@
-import React, { use } from "react";
-import { Link, useNavigate } from "react-router";
+import React, { use, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../../provider/AuthProvider";
 
 const Login = () => {
+  const [error, setError] = useState("");
+
   const { signIn } = use(AuthContext);
-  const navigate = useNavigate()
+
+  const location = useLocation();
+  // console.log(location);
+
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -17,12 +23,13 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        navigate("/")
+        navigate(`${location.state ? location.state : "/"}`);
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorCode, errorMessage);
+        // const errorMessage = error.message;
+        // alert(errorCode, errorMessage);
+        setError(errorCode)
       });
   };
   return (
@@ -41,6 +48,7 @@ const Login = () => {
               name="email"
               className="input"
               placeholder="Email"
+              required
             />
             {/* password */}
             <label className="label text-sm font-semibold">Password</label>
@@ -49,6 +57,7 @@ const Login = () => {
               name="password"
               className="input"
               placeholder="Password"
+              required
             />
             <div>
               <a className="link link-hover">Forgot password?</a>
@@ -62,6 +71,9 @@ const Login = () => {
                 Register
               </Link>
             </p>
+            {
+              error && <p className="text-xs text-red-400">{error}</p>
+            }
           </fieldset>
         </form>
       </div>
