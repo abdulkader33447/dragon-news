@@ -13,7 +13,6 @@ const Navbar = () => {
         alert("successfully logged out");
       })
       .catch((error) => console.log(error));
-
   };
   return (
     <div className="flex justify-between w-11/12 mx-auto items-center">
@@ -24,7 +23,11 @@ const Navbar = () => {
         <NavLink to="/career">Career</NavLink>
       </div>
       <div className="login-btn flex gap-5">
-        <img className="rounded-full" src={userIcon} alt="" />
+        <img
+          className="rounded-full size-10"
+          src={`${user ? user.photoURL : userIcon}`}
+          alt=""
+        />
         {user ? (
           <button className="btn btn-primary px-10" onClick={handleLogOut}>
             LogOut
