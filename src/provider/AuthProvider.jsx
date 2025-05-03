@@ -12,13 +12,20 @@ import {
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  // console.log(user);
+
+  // it's a suspension
+  const [loading, setLoading] = useState(true);
+  console.log(user, loading);
 
   const createUser = (email, password) => {
+    setLoading(true);
+
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signIn = (email, password) => {
+    setLoading(true);
+
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -29,6 +36,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (createUser) => {
       setUser(createUser);
+      setLoading(false);
     });
     return () => {
       unsubscribe();
@@ -41,6 +49,8 @@ const AuthProvider = ({ children }) => {
     createUser,
     logOut,
     signIn,
+    loading,
+    setLoading,
   };
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
